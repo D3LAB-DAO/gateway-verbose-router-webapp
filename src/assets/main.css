@@ -1,0 +1,18 @@
+@import './base.css';
+
+.container {
+  width: 100%;
+  max-width: 600px;
+  padding: 20px;
+  margin: auto;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 2rem;
+}
+
+.subtitle {
+  font-weight: 500;
+  font-size: 1.5rem;
+}
