@@ -13,6 +13,7 @@ export default {
   data() {
     return {
       isSpinning: false,
+      firstLoad: true,
     };
   },
   components: {
@@ -46,8 +47,10 @@ export default {
         class="uk-icon-button"
         uk-icon="arrow-down"
         @click="swapTokens"
-        :class="{ 'spin-animation': isSpinning }"
+        :class="{ 'first-load': firstLoad }"
+        @mouseover="firstLoad = false"
       >
+        <!-- :class="{ 'spin-animation': isSpinning }" -->
         <svg width="20" height="20" viewBox="0 0 20 20">
           <polygon
             points="10.5,16.08 5.63,10.66 6.37,10 10.5,14.58 14.63,10 15.37,10.66"
@@ -107,6 +110,14 @@ export default {
   color: #0f7ae5;
 }
 
+.uk-icon-button:not(.first-load) {
+  animation: spin-out 0.2s linear;
+}
+
+.uk-icon-button:hover {
+  animation: spin 0.2s linear forwards;
+}
+
 .btn-large {
   height: 60px;
   font-size: 18px;
@@ -122,7 +133,16 @@ export default {
     transform: translateX(-50%) rotate(0deg);
   }
   to {
-    transform: translateX(-50%) rotate(360deg);
+    transform: translateX(-50%) rotate(180deg);
+  }
+}
+
+@keyframes spin-out {
+  from {
+    transform: translateX(-50%) rotate(180deg);
+  }
+  to {
+    transform: translateX(-50%) rotate(0deg);
   }
 }
 </style>
