@@ -1,14 +1,18 @@
 {
-  "name": "verbose-router-frontend",
+  "homepage": "https://v8s-layer.github.io/verbose-router-webapp/",
+  "name": "verbose-router-webapp",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "ethers": "^6.6.2",
+    "gh-pages": "^5.0.0",
     "vue": "^3.3.4"
   },
   "devDependencies": {
