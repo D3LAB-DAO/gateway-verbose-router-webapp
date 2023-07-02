@@ -1,24 +1,25 @@
 <script>
-import { getTokenList, setTokenA, setTokenB } from "../assets/js/router";
+import { getTokenList, getTokenA, getTokenB } from "../assets/js/router";
 export default {
   props: ["index"],
   data() {
     return {
       tokens: [],
+      selectedToken: this.index === 0 ? getTokenA() : getTokenB(),
     };
   },
   mounted() {
     this.tokens = getTokenList();
   },
-  methods: {
-    handleSelectChange(e) {
-      if (this.index === 0) {
-        setTokenA(e.target.value);
-      } else if (this.index === 1) {
-        setTokenB(e.target.value);
-      }
-    },
-  },
+  // watch: {
+  //   selectedToken(newVal) {
+  //     if (this.index === 0) {
+  //       setTokenA(newVal);
+  //     } else if (this.index === 1) {
+  //       setTokenB(newVal);
+  //     }
+  //   },
+  // },
 };
 </script>
 
@@ -33,7 +34,7 @@ export default {
     <select
       class="select uk-select"
       aria-label="Select"
-      @change="handleSelectChange"
+      v-model="selectedToken"
     >
       <option selected disabled class="default-option">select</option>
       <option v-for="token in tokens" :key="token" :value="token">

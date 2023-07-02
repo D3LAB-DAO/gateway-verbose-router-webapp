@@ -1,11 +1,12 @@
 import { getVerbose, getFactory } from "./wallet";
 import ADDRESS from './json/address.json';
+import { ref } from 'vue';
 
 
 // Global Variables
 let slippage = 0.5;
-let tokenASymbol = 'select';
-let tokenBSymbol = 'select';
+let tokenASymbol = ref("select");
+let tokenBSymbol = ref("select");
 
 
 function getSlippage() {
@@ -34,6 +35,9 @@ async function swap(tokenASymbol, tokenBSymbol, slippage) {
 }
 
 function isSwapAble(tokenASymbol, tokenBSymbol) {
+    if (tokenASymbol.value === "select" || tokenBSymbol.value === "select") {
+        return false;
+    }
     return tokenASymbol != tokenBSymbol;
 }
 
@@ -44,8 +48,8 @@ function getTokenList() {
 }
 
 function getTokenAddress(symbol) {
-    if (symbol === 'FTM') { return ADDRESS.wftm; }
-    else if (symbol === 'USDC') { return ADDRESS.usdc; }
+    if (symbol.value === 'FTM') { return ADDRESS.wftm; }
+    else if (symbol.value === 'USDC') { return ADDRESS.usdc; }
     else { return null; }
 }
 
@@ -54,8 +58,8 @@ function getTokenA() {
 }
 
 function setTokenA(newTokenASymbol) {
-    tokenASymbol = newTokenASymbol;
-    console.log(tokenASymbol);
+    tokenASymbol.value = newTokenASymbol;
+    // console.log("tokenASymbol", tokenASymbol.value);
 }
 
 function getTokenB() {
@@ -63,8 +67,8 @@ function getTokenB() {
 }
 
 function setTokenB(newTokenBSymbol) {
-    tokenBSymbol = newTokenBSymbol;
-    console.log(tokenBSymbol);
+    tokenBSymbol.value = newTokenBSymbol;
+    // console.log("tokenBSymbol", tokenBSymbol.value);
 }
 
 
@@ -72,6 +76,5 @@ export {
     getSlippage, setSlippage, getPair, swap,
     isSwapAble,
     getTokenList, getTokenAddress,
-    getTokenA, setTokenA, getTokenB, setTokenB,
-    tokenASymbol, tokenBSymbol
+    getTokenA, setTokenA, getTokenB, setTokenB
 }

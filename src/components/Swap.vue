@@ -21,8 +21,8 @@ export default {
   },
   methods: {
     swapTokens() {
-      const tokenA = getTokenA();
-      const tokenB = getTokenB();
+      const tokenA = getTokenA().value;
+      const tokenB = getTokenB().value;
       setTokenA(tokenB);
       setTokenB(tokenA);
 
