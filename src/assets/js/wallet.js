@@ -1,8 +1,9 @@
 import { ethers } from "ethers";
 let provider = new ethers.BrowserProvider(window.ethereum);
 
-import ADDRESS from './json/address.json'
-import VERBOSE from './json/VerboseRouter.json'
+import ADDRESS from './json/address.json';
+import VERBOSE from './json/VerboseRouter.json';
+import FACTORY from './json/IVerboseFactory.json';
 
 
 const chainName = "Fantom Testnet";
@@ -15,10 +16,11 @@ const nativeCurrency = { name: "Fantom", decimals: 18, symbol: "FTM" };
 let account = undefined;
 let address = undefined;
 let verbose = undefined; // contract
-
+let factory = undefined; // contract
 
 async function connectContract() {
     verbose = new ethers.Contract(ADDRESS.verbose, VERBOSE.abi, provider);
+    factory = new ethers.Contract(ADDRESS.factory, FACTORY.abi, provider);
 }
 
 async function connectMetamask() {
@@ -66,6 +68,16 @@ function getAddress() {
     return address;
 }
 
+function getVerbose() {
+    return verbose;
+}
+
+function getFactory() {
+    return factory;
+}
+
+
 export {
-    connectMetamask, getAddress
+    connectMetamask, getAddress,
+    getVerbose, getFactory
 }
