@@ -24,7 +24,7 @@ export default {
       tokens: [],
       selectedToken: this.index === 0 ? getTokenA() : getTokenB(),
       inputAmount: this.index === 0 ? getInputA() : getInputB(),
-      decimals: new BigNumber(18), // default
+      decimals: undefined,
     };
   },
   mounted() {
@@ -35,17 +35,20 @@ export default {
       if (res !== null) {
         this.decimals = new BigNumber(res);
       } else {
-        this.decimals = new BigNumber(18); // default
+        this.decimals = undefined;
       }
     });
   },
   computed: {
+    isConnected() {
+      return getIsConnected().value;
+    },
     displayedInputAmount: {
       get() {
         // convert the original value to the display value
         return new BigNumber(this.inputAmount)
           .div(new BigNumber(10).pow(this.decimals))
-          .toFixed();
+          .toFixed(4);
       },
       set(value) {
         // convert the display value back to the original value
@@ -57,7 +60,7 @@ export default {
   },
   methods: {
     async getMaxBalance() {
-      if (getIsConnected().value) {
+      if (this.isConnected) {
         const maxBalance = await getTokenBalance(this.selectedToken);
         if (maxBalance !== null) {
           this.inputAmount = maxBalance;
@@ -75,13 +78,13 @@ export default {
         setTokenB(newVal);
       }
     },
-    inputAmount(newVal) {
+    async inputAmount(newVal) {
       if (this.index === 0) {
         setInputA(newVal);
-        setLastUpdatedIndex(0);
+        await setLastUpdatedIndex(0);
       } else if (this.index === 1) {
         setInputB(newVal);
-        setLastUpdatedIndex(1);
+        await setLastUpdatedIndex(1);
       }
     },
   },
@@ -94,18 +97,29 @@ export default {
       <input
         class="input uk-input uk-form-large"
         type="number"
-        step="1"
+        step="0.1"
         min="0"
         aria-label="Input"
         v-model="displayedInputAmount"
+        :disabled="!isConnected"
       />
-      <span class="uk-badge max-button" @click="getMaxBalance">max</span>
+      <span
+        class="uk-badge max-button"
+        :class="{
+          'max-button-enabled': isConnected,
+          'max-button-disabled': !isConnected,
+        }"
+        @click="getMaxBalance"
+      >
+        max
+      </span>
     </div>
     <div class="select-div uk-width-1-5@s uk-width-1-1">
       <select
         class="select uk-select"
         aria-label="Select"
         v-model="selectedToken"
+        :disabled="!isConnected"
       >
         <option selected disabled class="default-option">select</option>
         <option v-for="token in tokens" :key="token" :value="token">
@@ -130,7 +144,7 @@ export default {
   background-color: transparent;
 }
 
-.max-button {
+.max-button-enabled {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -139,9 +153,23 @@ export default {
   padding: 10px;
   /* border: 10px solid transparent; */
 }
-.max-button:hover {
+.max-button-enabled:hover {
   cursor: pointer;
   background-color: #eeeeee;
+}
+
+.max-button-disabled {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 10px;
+  background-color: #bbbbbb;
+  cursor: not-allowed;
+}
+
+.max-button-disabled:hover {
+  cursor: not-allowed;
+  background-color: #bbbbbb;
 }
 
 .input-div,
