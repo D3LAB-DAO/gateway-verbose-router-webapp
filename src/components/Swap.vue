@@ -106,7 +106,16 @@ export default {
   padding: 30px;
   margin-top: 10px;
   border-radius: 10px;
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  /*
+  box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+  */
 }
+
+.card:hover {
+  box-shadow: 0 3px 3px rgba(0,0,0,0.04);
+}
+
 .btn {
   width: 100%;
   border-radius: 10px;
