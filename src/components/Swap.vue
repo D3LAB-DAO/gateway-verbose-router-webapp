@@ -17,7 +17,7 @@ export default {
   },
   computed: {
     buttonText() {
-      return getIsConnected().value ? "Swap" : "Connect to Metamask";
+      return getIsConnected().value ? "Swap" : "Connect";
     },
   },
   methods: {
@@ -103,7 +103,7 @@ export default {
 <style scoped>
 .card {
   background: #ffffff;
-  padding: 30px;
+  padding: 10px;
   margin-top: 10px;
   border-radius: 10px;
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
@@ -118,6 +118,7 @@ export default {
 
 .btn {
   width: 100%;
+  font-size: 0.9rem !important;
   border-radius: 10px;
 }
 
@@ -146,7 +147,7 @@ export default {
 
 .btn-large {
   height: 60px;
-  font-size: 18px;
+  font-size: 1rem;
   font-weight: bold;
 }
 

@@ -138,5 +138,6 @@ export default {
 
 .slippage-item {
   /* height: 36px; */
+  font-size: 0.9rem !important;
 }
 </style>

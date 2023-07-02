@@ -5,14 +5,18 @@ import Swap from "./components/Swap.vue";
 
 <template>
   <Wallet />
-  <div class="container container-card">
-    <Swap />
+  <div class="outer-container">
+    <div class="container container-card">
+      <Swap />
+    </div>
   </div>
 </template>
 
 <style scoped>
+.outer-container {
+  padding: 20px;
+}
 .container-card {
-  margin-top: 30px;
   background-color: #ffffff99;
   box-shadow: 0 15px 23px rgba(0, 0, 0, 0.05);
   border-radius: 15px;

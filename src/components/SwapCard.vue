@@ -142,6 +142,7 @@ export default {
   width: 85%;
   border: none;
   background-color: transparent;
+  font-size: 1rem !important;
 }
 
 .max-button-enabled {
@@ -185,6 +186,7 @@ export default {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+  font-size: 0.9rem !important;
 }
 
 .select:focus .default-option {

@@ -20,6 +20,19 @@ export default {
       }
     });
   },
+  computed: {
+    truncatedBtnText() {
+      if (this.btnText.length > 15) {
+        return (
+          this.btnText.substring(0, 6) +
+          "..." +
+          this.btnText.substring(this.btnText.length - 4)
+        );
+      } else {
+        return this.btnText;
+      }
+    },
+  },
   methods: {
     connectOnClick: async function () {
       const success = await connectMetamask();
@@ -38,7 +51,7 @@ export default {
     <div class="uk-navbar-left"><img class="logo" src="/logo.png" /></div>
     <div class="uk-navbar-right">
       <button class="btn uk-button" @click="connectOnClick">
-        {{ btnText }}
+        {{ truncatedBtnText }}
       </button>
     </div>
   </div>
