@@ -30,7 +30,7 @@ export default {
       }
     },
     isFloat(value) {
-      return /^\-?\d+(\.\d+)?$/.test(value);
+      return /^\d+(\.\d+)?$/.test(value) && value <= 100;
     },
   },
 };
@@ -50,42 +50,45 @@ export default {
               <div class="uk-form-label">Slippage</div>
               <div class="uk-flex uk-flex-between uk-margin-bottom">
                 <button
-                  class="uk-button uk-width-1-4 uk-margin-small-right"
+                  class="slippage-item slippage-button uk-button uk-width-1-5 uk-margin-small-right"
                   :class="{ 'uk-button-primary': slippage == '0.1' }"
                   @click.prevent="toggleInput('0.1')"
                 >
                   0.1
                 </button>
                 <button
-                  class="uk-button uk-width-1-4 uk-margin-small-right"
+                  class="slippage-item slippage-button uk-button uk-width-1-5 uk-margin-small-right"
                   :class="{ 'uk-button-primary': slippage == '0.5' }"
                   @click.prevent="toggleInput('0.5')"
                 >
                   0.5
                 </button>
                 <button
-                  class="uk-button uk-width-1-4 uk-margin-small-right"
+                  class="slippage-item slippage-button uk-button uk-width-1-5 uk-margin-small-right"
                   :class="{ 'uk-button-primary': slippage == '1.0' }"
                   @click.prevent="toggleInput('1.0')"
                 >
                   1.0
                 </button>
                 <button
-                  class="uk-button uk-width-1-4"
+                  class="slippage-item slippage-button uk-button uk-width-1-5"
                   :class="{ 'uk-button-primary': slippage == 'custom' }"
                   @click.prevent="toggleInput('custom')"
                 >
                   Custom
                 </button>
+                <input
+                  class="slippage-item uk-input uk-width-1-5"
+                  id="form-horizontal-text"
+                  type="number"
+                  step="0.1"
+                  min="0"
+                  max="100"
+                  value="5.0"
+                  disabled
+                  v-on:input="updateSlippage"
+                />
               </div>
-              <input
-                class="uk-input"
-                id="form-horizontal-text"
-                type="text"
-                placeholder="Type Custom Slippage ..."
-                disabled
-                v-on:input="updateSlippage"
-              />
             </div>
           </form>
         </div>
@@ -93,3 +96,17 @@ export default {
     </ul>
   </div>
 </template>
+
+<style scoped>
+.uk-form-label {
+  width: 120px;
+}
+
+.slippage-button {
+  padding: 0px;
+}
+
+.slippage-item {
+  /* height: 36px; */
+}
+</style>
