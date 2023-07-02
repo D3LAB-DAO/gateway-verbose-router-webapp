@@ -5,7 +5,7 @@ export default {
   data() {
     return {
       connected: false,
-      btnText: "Connect to wallet",
+      btnText: "Connect",
     };
   },
   mounted() {},
