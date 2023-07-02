@@ -1,13 +1,8 @@
 <script>
-import { ref } from "vue";
 import SwapCard from "./SwapCard.vue";
 import Setting from "./Setting.vue";
-import {
-  getTokenA,
-  getTokenB,
-  setTokenA,
-  setTokenB,
-} from "../assets/js/router";
+import { change, swap } from "../assets/js/router";
+import { connectMetamask, getIsConnected } from "../assets/js/wallet";
 
 export default {
   data() {
@@ -20,17 +15,34 @@ export default {
     SwapCard,
     Setting,
   },
+  computed: {
+    buttonText() {
+      return getIsConnected().value ? "Swap" : "Connect to Metamask";
+    },
+  },
   methods: {
-    swapTokens() {
-      const tokenA = getTokenA().value;
-      const tokenB = getTokenB().value;
-      setTokenA(tokenB);
-      setTokenB(tokenA);
+    changeTokens() {
+      change();
 
       this.isSpinning = true;
       setTimeout(() => {
         this.isSpinning = false;
       }, 500); // same as the animation duration
+    },
+    async swapTokens() {
+      await swap();
+    },
+    async buttonAction() {
+      if (getIsConnected().value) {
+        await this.swapTokens();
+      } else {
+        const success = await connectMetamask();
+        if (success) {
+          console.log("metamask successfully connected!");
+        } else {
+          console.log("metamask connection failed!");
+        }
+      }
     },
   },
 };
@@ -46,7 +58,7 @@ export default {
       <a
         class="uk-icon-button"
         uk-icon="arrow-down"
-        @click="swapTokens"
+        @click="changeTokens"
         :class="{ 'first-load': firstLoad }"
         @mouseover="firstLoad = false"
       >
@@ -78,7 +90,12 @@ export default {
     </div>
     <hr />
     <div class="uk-text-center">
-      <button class="btn uk-button uk-button-primary btn-large">Swap</button>
+      <button
+        class="btn uk-button uk-button-primary btn-large"
+        @click="buttonAction"
+      >
+        {{ buttonText }}
+      </button>
     </div>
   </div>
 </template>

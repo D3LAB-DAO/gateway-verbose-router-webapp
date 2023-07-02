@@ -11,6 +11,7 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "bignumber.js": "^9.1.1",
     "ethers": "^6.6.2",
     "gh-pages": "^5.0.0",
     "vue": "^3.3.4"

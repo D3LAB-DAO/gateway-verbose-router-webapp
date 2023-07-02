@@ -1,3 +1,5 @@
+import { ref } from 'vue';
+
 import { ethers } from "ethers";
 let provider = new ethers.BrowserProvider(window.ethereum);
 
@@ -13,14 +15,14 @@ const nativeCurrency = { name: "Fantom", decimals: 18, symbol: "FTM" };
 
 
 // Global Variables
-let account = undefined;
-let address = undefined;
 let verbose = undefined; // contract
 let factory = undefined; // contract
+let isConnected = ref(false);
+
 
 async function connectContract() {
-    verbose = new ethers.Contract(ADDRESS.verbose, VERBOSE.abi, provider);
-    factory = new ethers.Contract(ADDRESS.factory, FACTORY.abi, provider);
+    verbose = new ethers.Contract(ADDRESS.verbose, VERBOSE.abi, await getAccount());
+    factory = new ethers.Contract(ADDRESS.factory, FACTORY.abi, await getAccount());
 }
 
 async function connectMetamask() {
@@ -53,9 +55,8 @@ async function connectMetamask() {
         }
 
         await provider.send('eth_requestAccounts', []); // this promps user to connect metamask
-        account = await provider.getSigner();
-        address = account.address;
         await connectContract();
+        isConnected.value = true;
 
         return true;
     } else {
@@ -64,8 +65,12 @@ async function connectMetamask() {
     return false;
 }
 
-function getAddress() {
-    return address;
+async function getAccount() {
+    return (await provider.getSigner());
+}
+
+async function getAddress() {
+    return (await getAccount()).address;
 }
 
 function getVerbose() {
@@ -76,8 +81,13 @@ function getFactory() {
     return factory;
 }
 
+function getIsConnected() {
+    return isConnected;
+}
+
 
 export {
-    connectMetamask, getAddress,
-    getVerbose, getFactory
+    connectMetamask, getAccount, getAddress,
+    getVerbose, getFactory,
+    getIsConnected
 }

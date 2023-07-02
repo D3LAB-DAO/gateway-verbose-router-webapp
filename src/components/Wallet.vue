@@ -1,25 +1,32 @@
 <!-- <script setup> -->
 <script>
-import { connectMetamask, getAddress } from "../assets/js/wallet";
+import {
+  getIsConnected,
+  connectMetamask,
+  getAddress,
+} from "../assets/js/wallet";
+import { watchEffect } from "vue";
+
 export default {
   data() {
     return {
-      connected: false,
       btnText: "Connect",
     };
   },
-  mounted() {},
+  mounted() {
+    watchEffect(async () => {
+      if (getIsConnected().value) {
+        this.btnText = await getAddress();
+      }
+    });
+  },
   methods: {
     connectOnClick: async function () {
-      if (getAddress() !== undefined) return;
-
       const success = await connectMetamask();
       if (success) {
         console.log("metamask successfully connected!");
-        this.btnText = getAddress();
       } else {
         console.log("metamask connection failed!");
-        this.btnText = "metamask required!";
       }
     },
   },
