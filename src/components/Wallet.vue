@@ -48,7 +48,10 @@ export default {
 
 <template>
   <div class="uk-navbar-container nav" uk-navbar>
-    <div class="uk-navbar-left"><img class="logo" src="/logo.png" /></div>
+    <div class="uk-navbar-left">
+      <img class="logo" src="/logo.png" />
+      <b>Verbose Router</b>
+    </div>
     <div class="uk-navbar-right">
       <button class="btn uk-button" @click="connectOnClick">
         {{ truncatedBtnText }}

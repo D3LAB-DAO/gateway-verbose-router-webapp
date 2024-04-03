@@ -66,12 +66,12 @@ export default {
         <svg width="20" height="20" viewBox="0 0 20 20">
           <polygon
             points="10.5,16.08 5.63,10.66 6.37,10 10.5,14.58 14.63,10 15.37,10.66"
-            stroke="#0f7ae5"
+            stroke="#eb5b29"
             stroke-width="1.8"
           ></polygon>
           <line
             fill="#none"
-            stroke="#0f7ae5"
+            stroke="#eb5b29"
             stroke-width="3"
             x1="10.5"
             y1="4"
@@ -134,7 +134,7 @@ export default {
   left: 50%;
   transform: translateX(-50%);
   background-color: var(--color-background-soft);
-  color: #0f7ae5;
+  color: #eb5b29;
 }
 
 .uk-icon-button:not(.first-load) {

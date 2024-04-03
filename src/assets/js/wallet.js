@@ -10,7 +10,7 @@ import FACTORY from './json/IVerboseFactory.json';
 
 const chainName = "Fantom Testnet";
 const chainId = '0xfa2';
-const rpcUrl = "https://rpc.testnet.fantom.network/";
+const rpcUrl = "https://rpc.ankr.com/fantom_testnet";
 const nativeCurrency = { name: "Fantom", decimals: 18, symbol: "FTM" };
 
 
