@@ -13,5 +13,5 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
-  base: '/verbose-router-webapp/'
+  base: '/gateway-verbose-router-webapp/'
 })
